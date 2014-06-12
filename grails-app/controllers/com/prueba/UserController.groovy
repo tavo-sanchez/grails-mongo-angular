@@ -105,4 +105,23 @@ class UserController {
     def listUsers(){
         render User.list() as JSON
     }
+
+    def createUser(){
+        println request.JSON
+        User user = new User(
+                name: request.JSON.name,
+                userName: request.JSON.userName,
+                lastName: request.JSON.lastName,
+                password: request.JSON.password,
+                email: request.JSON.email
+        )
+        println user
+        if(user.save(failOnError: true, flush: true)){
+            render (['success': false] as JSON)
+        } else {
+            render (['success': true] as JSON)
+        }
+
+
+    }
 }
